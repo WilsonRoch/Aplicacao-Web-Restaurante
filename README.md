@@ -46,7 +46,11 @@ Sistema web de menu para restaurante com duas áreas:
 
 ## Configuração do Banco de Dados
 
-O projeto utiliza MySQL.
+O projeto utiliza MySQL, e o banco é gerado pelo JPA/Hibernate.
+
+Exemplo do banco de dados criado (modelo lógico): 
+<img width="685" height="240" alt="menuRestauranteDB-modelo logico" src="https://github.com/user-attachments/assets/0894c2be-e87d-49e3-81de-02a1879bb4a2" />
+
 
 Arquivo de configuração do back-end:
 - `src/main/resources/application.properties`
