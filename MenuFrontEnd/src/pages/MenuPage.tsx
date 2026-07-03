@@ -98,7 +98,7 @@ export function MenuPage() {
 
         try {
             await deleteProduto.mutateAsync(produto.id)
-            setFeedback('Produto excluído com sucesso.')
+            setFeedback('Produto removido do menu com sucesso.')
         } catch {
             setFeedback('Não foi possível excluir o produto.')
         }

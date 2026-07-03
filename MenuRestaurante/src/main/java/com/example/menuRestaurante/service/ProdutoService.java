@@ -83,9 +83,13 @@ public class ProdutoService {
     }
 
     public void deletar(Long id) {
-        if (!produtoRepository.existsById(id)) {
+        Optional<Produto> produtoOptional = produtoRepository.findById(id);
+        if (produtoOptional.isEmpty()) {
             throw new IllegalArgumentException("Produto não encontrado com ID: " + id);
         }
-        produtoRepository.deleteById(id);
+
+        Produto produto = produtoOptional.get();
+        produto.setStatus(StatusProduto.INATIVO);
+        produtoRepository.save(produto);
     }
 }

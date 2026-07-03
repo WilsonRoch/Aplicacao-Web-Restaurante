@@ -48,7 +48,7 @@ public class ProdutoController {
     public ResponseEntity<?> deletar(@PathVariable Long id){
         try {
             produtoService.deletar(id);
-            return ResponseEntity.ok("Deletado com sucesso!");
+            return ResponseEntity.ok("Produto removido do cardápio com sucesso!");
         } catch (IllegalArgumentException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
@@ -57,8 +57,7 @@ public class ProdutoController {
     @PutMapping("/{id}")
     public ResponseEntity<?> atualizar(@PathVariable Long id, @Valid @RequestBody ProdutoDTORequest produtoDTO){
         try {
-            var atualizado = produtoService.atualizar(id, produtoDTO);
-            return ResponseEntity.ok(produtoService.buscarPorId(id).orElseThrow());
+            return ResponseEntity.ok(produtoService.atualizar(id, produtoDTO));
         } catch (IllegalArgumentException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
