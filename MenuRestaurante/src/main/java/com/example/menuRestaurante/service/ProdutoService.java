@@ -4,6 +4,7 @@ import com.example.menuRestaurante.dto.ProdutoDTORequest;
 import com.example.menuRestaurante.dto.ProdutoDTOResponse;
 import com.example.menuRestaurante.model.Produto;
 import com.example.menuRestaurante.model.StatusProduto;
+import com.example.menuRestaurante.repository.ItemPedidoRepository;
 import com.example.menuRestaurante.repository.ProdutoRepository;
 import org.springframework.stereotype.Service;
 
@@ -14,10 +15,12 @@ import java.util.Optional;
 @Service
 public class ProdutoService {
     private final ProdutoRepository produtoRepository;
+    private final ItemPedidoRepository itemPedidoRepository;
 
 
-    public ProdutoService(ProdutoRepository produtoRepository) {
+    public ProdutoService(ProdutoRepository produtoRepository, ItemPedidoRepository itemPedidoRepository) {
         this.produtoRepository = produtoRepository;
+        this.itemPedidoRepository = itemPedidoRepository;
     }
 
     private ProdutoDTOResponse toResponse(Produto produto) {
@@ -82,14 +85,21 @@ public class ProdutoService {
         return toResponse(produto);
     }
 
-    public void deletar(Long id) {
-        Optional<Produto> produtoOptional = produtoRepository.findById(id);
-        if (produtoOptional.isEmpty()) {
-            throw new IllegalArgumentException("Produto não encontrado com ID: " + id);
+    public String deletar(Long id) {
+        Produto produto = produtoRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Produto não encontrado com ID: " + id));
+
+        long totalItensPedido = itemPedidoRepository.countByProduto_Id(id);
+        if (totalItensPedido == 0) {
+            produtoRepository.deleteById(id);
+            return "Produto removido com sucesso!";
         }
 
-        Produto produto = produtoOptional.get();
-        produto.setStatus(StatusProduto.INATIVO);
-        produtoRepository.save(produto);
+        if (produto.getStatus() != StatusProduto.INATIVO) {
+            produto.setStatus(StatusProduto.INATIVO);
+            produtoRepository.save(produto);
+        }
+
+        return "Produto desativado porque possui pedidos vinculados.";
     }
 }
