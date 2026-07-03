@@ -1,0 +1,35 @@
+/* src/components/Modal.css */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(15, 23, 42, 0.65);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    padding: 24px;
+}
+
+.modal-content {
+    background: white;
+    padding: 28px;
+    border-radius: 20px;
+    position: relative;
+    width: 100%;
+    max-width: 560px;
+    box-shadow: 0 30px 80px rgba(15, 23, 42, 0.25);
+}
+
+.close-button {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: #334155;
+}

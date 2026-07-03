@@ -1,0 +1,15 @@
+.product-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 320px));
+    justify-content: center;
+    gap: 20px;
+}
+
+.product-list__status {
+    margin: 24px 0 0;
+    color: #334155;
+}
+
+.product-list__status--error {
+    color: #b91c1c;
+}
